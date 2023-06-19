@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "summarizer"
+version = "0.1.0"
+description = "Intelligent Summarizer of various types of media"
+authors = ["Mariya Davydova <mrs.mariya.davydova@gmail.com>"]
+license = "Apache 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+langchain = "^0.0.205"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
