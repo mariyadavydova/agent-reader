@@ -11,7 +11,7 @@ COHERE_API_KEY = os.environ.get('COHERE_API_KEY')
 if __name__ == "__main__":
   llms = [
     get_best_llm_openai(OPEN_AI_KEY),
-    get_best_llm_cohere(COHERE_API_KEY)
+    # get_best_llm_cohere(COHERE_API_KEY)   # so far this LLM is working poorly
   ]
   urls = [
     "https://www.bbc.com/news/technology-65886125", # news article

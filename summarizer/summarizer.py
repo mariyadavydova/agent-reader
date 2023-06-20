@@ -8,23 +8,15 @@ from langchain.prompts import PromptTemplate
 from langchain.docstore.document import Document
 from langchain.chains.summarize import load_summarize_chain
 
+from .link_type import LinkType
+
 def get_best_llm_openai(api_key, model_name="text-davinci-003", temperature=0.5):
   return OpenAI(model=model_name, temperature=temperature, openai_api_key=api_key)
 
 def get_best_llm_cohere(api_key, model_name="summarize-xlarge"):
   return Cohere(model=model_name, cohere_api_key=api_key)
 
-def read_webpage_title(url):
-  try:
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, 'html.parser')
-    title = soup.find('title').text.strip()
-    return title
-  except:
-    raise Exception(f"Failed to load {url}, status code: {response.status_code}")
-
-
-def read_webpage_context(url):
+def get_the_page_content(url):
   headers = {
     "User-Agent":
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0"
@@ -34,11 +26,55 @@ def read_webpage_context(url):
     raise Exception(f"Failed to load {url}, status code: {response.status_code}")
   content = response.text
   soup = BeautifulSoup(content, "html.parser")
+  return soup
+
+def read_webpage_title(url):
+  soup = get_the_page_content(url)
+  title = soup.find('title').text.strip()
+  return title
+
+def read_webpage_content(url):
+  soup = get_the_page_content(url)
   for script in soup(["script", "style"]):
     script.decompose()
   text = soup.get_text()
   return text
 
+def read_github_title(url):
+  soup = get_the_page_content(url)
+  element = soup.find(id="readme")
+  text = None
+  if element is not None:
+    h1_tag = element.find('h1')
+    if h1_tag is not None:
+      text = h1_tag.get_text()
+  return text
+
+def read_github_content(url):
+  soup = get_the_page_content(url)
+  element = soup.find(id="readme")
+  text = None
+  if element is not None:
+    for script in element(["script", "style"]):
+      script.decompose()
+    text = element.get_text()
+  return text
+
+def read_arxiv_title(url):
+  soup = get_the_page_content(url)
+  element = soup.find('h1', attrs={'class': 'title'})
+  text = None
+  if element is not None:
+    text = element.get_text()
+  return text
+
+def read_arxiv_content(url):
+  soup = get_the_page_content(url)
+  element = soup.find('blockquote', attrs={'class': 'abstract'})
+  text = None
+  if element is not None:
+    text = element.get_text()
+  return text
 
 def summarize(url, llm):
   text_splitter = RecursiveCharacterTextSplitter()
@@ -51,9 +87,18 @@ def summarize(url, llm):
   Bullet points:"""
   summarizer_prompt = PromptTemplate(template=prompt_template,
                                       input_variables=["text"])
+  
+  type = LinkType.get_type_from_link(url)
 
-  text = read_webpage_context(url)
-  title = read_webpage_title(url)
+  if type == LinkType.PROJECT:
+    text = read_github_content(url)
+    title = read_github_title(url)
+  elif type == LinkType.PAPER:
+    text = read_arxiv_content(url)
+    title = read_arxiv_title(url)
+  else:
+    text = read_webpage_content(url)
+    title = read_webpage_title(url)
 
   try:
     texts = text_splitter.split_text(text)
