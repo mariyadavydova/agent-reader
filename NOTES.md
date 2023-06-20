@@ -6,8 +6,8 @@ The goal of this project is two-fold:
 ## Media sources
 
 * [x] Web pages
-* [ ] GitHub projects
-* [ ] Arxiv papers annotations
+* [x] GitHub projects
+* [x] Arxiv papers annotations
 * [ ] Twitter threads
 * [ ] Reddit threads
 * [ ] YouTube videos (aspirational; it's beyond text summarization)
