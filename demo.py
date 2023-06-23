@@ -1,4 +1,4 @@
-from summarizer import summarize, get_best_llm_openai, get_best_llm_cohere
+from agent_summarizer import summarize, get_best_llm_openai, get_best_llm_cohere
 import os
 from dotenv import load_dotenv
 import time
