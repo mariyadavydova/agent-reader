@@ -76,6 +76,22 @@ def read_arxiv_content(url):
     text = element.get_text()
   return text
 
+def read_openaccess_title(url):
+  soup = get_the_page_content(url)
+  element = soup.find('div', attrs={'id': 'papertitle'})
+  text = None
+  if element is not None:
+    text = element.get_text()
+  return text
+
+def read_openaccess_content(url):
+  soup = get_the_page_content(url)
+  element = soup.find('div', attrs={'id': 'abstract'})
+  text = None
+  if element is not None:
+    text = element.get_text()
+  return text
+
 def summarize(url, llm):
   text_splitter = RecursiveCharacterTextSplitter()
   prompt_template = """Write a concise summary of the following text. 
@@ -96,9 +112,15 @@ def summarize(url, llm):
   elif type == LinkType.PAPER:
     text = read_arxiv_content(url)
     title = read_arxiv_title(url)
+  elif type == LinkType.OA_PAPER:
+    text = read_openaccess_content(url)
+    title = read_openaccess_title(url)
   else:
     text = read_webpage_content(url)
     title = read_webpage_title(url)
+
+  text = text.strip()
+  title = title.strip()
 
   try:
     texts = text_splitter.split_text(text)
@@ -108,6 +130,7 @@ def summarize(url, llm):
                                 map_prompt=summarizer_prompt,
                                 combine_prompt=summarizer_prompt)
     summary = chain.run(docs)
+    summary = "  " + summary.strip()
     return {
       "title": title,
       "summary": summary,

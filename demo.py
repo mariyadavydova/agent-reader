@@ -17,6 +17,7 @@ if __name__ == "__main__":
     "https://www.bbc.com/news/technology-65886125", # news article
     "https://baseten.co",                           # company website
     "https://arxiv.org/abs/2305.20050",             # research paper
+    "https://openaccess.thecvf.com/content/CVPR2023/html/Ci_GFPose_Learning_3D_Human_Pose_Prior_With_Gradient_Fields_CVPR_2023_paper.html", 
     "https://github.com/hwchase17/langchain"        # github repo
   ]
   for url, llm in itertools.product(urls, llms):
