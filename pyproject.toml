@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "summarizer"
+name = "agent_summarizer"
 version = "0.1.0"
 description = "Intelligent Summarizer of various types of media"
 authors = ["Mariya Davydova <mrs.mariya.davydova@gmail.com>"]
