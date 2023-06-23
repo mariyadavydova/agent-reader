@@ -134,6 +134,7 @@ def summarize(url, llm):
     return {
       "title": title,
       "summary": summary,
+      "content": text
     }
   except Exception as e:
     raise Exception(f"Error while summarizing the link {url}: {e}")
