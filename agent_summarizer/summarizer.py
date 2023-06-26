@@ -92,18 +92,7 @@ def read_openaccess_content(url):
     text = element.get_text()
   return text
 
-def summarize(url, llm):
-  text_splitter = RecursiveCharacterTextSplitter()
-  prompt_template = """Write a concise summary of the following text. 
-  I want you to provide me with bullet points highlighting the core ideas
-  of this piece. Keep each bullet point under one or two sentences.
-
-    {text}
-
-  Bullet points:"""
-  summarizer_prompt = PromptTemplate(template=prompt_template,
-                                      input_variables=["text"])
-  
+def retrieve(url):
   type = LinkType.get_type_from_link(url)
 
   if type == LinkType.PROJECT:
@@ -119,8 +108,27 @@ def summarize(url, llm):
     text = read_webpage_content(url)
     title = read_webpage_title(url)
 
-  text = text.strip()
-  title = title.strip()
+  return {
+    "title": title.strip(),
+    "content": text.strip()
+  }
+
+
+def summarize(url, llm):
+  text_splitter = RecursiveCharacterTextSplitter()
+  prompt_template = """Write a concise summary of the following text. 
+  I want you to provide me with bullet points highlighting the core ideas
+  of this piece. Keep each bullet point under one or two sentences.
+
+    {text}
+
+  Bullet points:"""
+  summarizer_prompt = PromptTemplate(template=prompt_template,
+                                      input_variables=["text"])
+  
+  result = retrieve(url)
+  text = result["content"]
+  title = result["title"]
 
   try:
     texts = text_splitter.split_text(text)
