@@ -30,14 +30,14 @@ def get_the_page_content(url):
 
 def read_webpage_title(url):
   soup = get_the_page_content(url)
-  title = soup.find('title').text.strip()
+  title = soup.find('title').text.strip() if soup.find('title') else None
   return title
 
 def read_webpage_content(url):
   soup = get_the_page_content(url)
   for script in soup(["script", "style"]):
     script.decompose()
-  text = soup.get_text()
+  text = '\n'.join(soup.stripped_strings)
   return text
 
 def read_github_title(url):
