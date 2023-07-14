@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "agent_reader"
-version = "0.2.0"
+version = "0.2.1"
 description = "Intelligent Reader of various types of media"
 authors = ["Mariya Davydova <mrs.mariya.davydova@gmail.com>"]
 license = "Apache 2.0"
