@@ -45,7 +45,7 @@ if __name__ == "__main__":
   llms = [
     {'type': ModelType.OPENAI_GPT35, 'model': get_model(ModelType.OPENAI_GPT35, OPEN_AI_KEY)},
     {'type': ModelType.OPENAI_GPT4, 'model': get_model(ModelType.OPENAI_GPT4, OPEN_AI_KEY)},
-    {'type': ModelType.COHERE_L, 'model': get_model(ModelType.COHERE_L, COHERE_API_KEY)},
+    {'type': ModelType.COHERE_M, 'model': get_model(ModelType.COHERE_M, COHERE_API_KEY)},
     {'type': ModelType.COHERE_XL, 'model': get_model(ModelType.COHERE_XL, COHERE_API_KEY)}
   ]
   urls = [

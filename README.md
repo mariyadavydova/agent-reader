@@ -1,6 +1,6 @@
-# Agent Summarizer
+# Agent Reader
 
-Intelligent summarizer for various kinds of media sources: web pages, Twitter threads, etc.
+Intelligent Reader for various kinds of media sources: web pages, Twitter threads, etc.
 
 Early alpha version. Please don't use it for anything serious.
 
@@ -17,5 +17,9 @@ Early alpha version. Please don't use it for anything serious.
 ## Installation
 
 ```bash
-pip install summarizer
+pip install agent-reader
 ```
+
+## Usage
+
+Look at the [demo](demo.py) script for the example of usage.

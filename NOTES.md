@@ -1,6 +1,7 @@
 The goal of this project is two-fold:
 
-* Support summarization of a large number of various media sources, including web pages, Twitter threads, etc.
+* Support reading, summarization, and analysis of a large number of various media sources, 
+including web pages, Twitter threads, etc.
 * Give a try to various LLMs, available via API (i.e. affordable for hobbyists like me).
 
 ## Media sources

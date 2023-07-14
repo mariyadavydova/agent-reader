@@ -14,7 +14,7 @@ from .link_type import LinkType
 class ModelType(Enum):
   OPENAI_GPT35 = 1
   OPENAI_GPT4 = 2
-  COHERE_L = 3
+  COHERE_M = 3
   COHERE_XL = 4
 
 def get_model(model_type, api_key, temperature=0):
@@ -22,8 +22,8 @@ def get_model(model_type, api_key, temperature=0):
     return ChatOpenAI(openai_api_key=api_key, model="gpt-3.5-turbo", temperature=temperature)
   elif model_type == ModelType.OPENAI_GPT4:
     return ChatOpenAI(openai_api_key=api_key, model="gpt-4", temperature=temperature)
-  elif model_type == ModelType.COHERE_L:
-    return Cohere(cohere_api_key=api_key, model="summarize-large")
+  elif model_type == ModelType.COHERE_M:
+    return Cohere(cohere_api_key=api_key, model="summarize-medium")
   elif model_type == ModelType.COHERE_XL:
     return Cohere(cohere_api_key=api_key, model="summarize-xlarge")
   else:
