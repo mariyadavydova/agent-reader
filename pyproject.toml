@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "agent_summarizer"
-version = "0.1.2"
-description = "Intelligent Summarizer of various types of media"
+name = "agent_reader"
+version = "0.2.0"
+description = "Intelligent Reader of various types of media"
 authors = ["Mariya Davydova <mrs.mariya.davydova@gmail.com>"]
 license = "Apache 2.0"
 readme = "README.md"
@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 requests = "^2.31.0"
-langchain = "^0.0.205"
+langchain = "^0.0.216"
 bs4 = "^0.0.1"
 python-dotenv = "^1.0.0"
 cohere = "^4.11.2"

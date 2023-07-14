@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from enum import Enum
 
-from langchain.llms import OpenAI, Cohere
+from langchain.llms import Cohere
+from langchain.chat_models.openai import ChatOpenAI
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
 from langchain.docstore.document import Document
@@ -10,11 +11,23 @@ from langchain.chains.summarize import load_summarize_chain
 
 from .link_type import LinkType
 
-def get_best_llm_openai(api_key, model_name="text-davinci-003", temperature=0.5):
-  return OpenAI(model=model_name, temperature=temperature, openai_api_key=api_key)
+class ModelType(Enum):
+  OPENAI_GPT35 = 1
+  OPENAI_GPT4 = 2
+  COHERE_L = 3
+  COHERE_XL = 4
 
-def get_best_llm_cohere(api_key, model_name="summarize-xlarge"):
-  return Cohere(model=model_name, cohere_api_key=api_key)
+def get_model(model_type, api_key, temperature=0):
+  if model_type == ModelType.OPENAI_GPT35:
+    return ChatOpenAI(openai_api_key=api_key, model="gpt-3.5-turbo", temperature=temperature)
+  elif model_type == ModelType.OPENAI_GPT4:
+    return ChatOpenAI(openai_api_key=api_key, model="gpt-4", temperature=temperature)
+  elif model_type == ModelType.COHERE_L:
+    return Cohere(cohere_api_key=api_key, model="summarize-large")
+  elif model_type == ModelType.COHERE_XL:
+    return Cohere(cohere_api_key=api_key, model="summarize-xlarge")
+  else:
+    raise Exception(f"Unknown model type: {model_type}")
 
 def get_the_page_content(url):
   headers = {
